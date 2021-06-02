@@ -5,13 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class saveLocations extends Model
+class Location extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'locations-name',
-        'locations-longitude',
-        'locations-width',
+        'locationsname',
+        'longitude',
+        'width',
     ];
+
+    public function user()
+    {
+    	return $this->belongsTo(User::class);
+    }
 }
