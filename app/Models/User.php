@@ -42,8 +42,8 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function Locations()
-    {
-    	return $this->hasMany(Location::class);
-    }
+   // public function Locations()
+    //{
+   // 	return $this->hasMany(Location::class);
+    //}
 }

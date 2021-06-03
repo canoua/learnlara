@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LocationsController;
+use App\Models\Location;
 
 class LocationsController extends Controller
 {
@@ -17,8 +18,9 @@ class LocationsController extends Controller
     	$location = new Location();
     	$location->locations_name = $request->locations_name;
         $location->user_id = auth()->user()->id;
-    	$location->longitude = auth()->user()->id;
-    	$location->save();
+    	$location->longitude = $request->longitude;
+    	$location->latitude = $request->latitude;
+        $location->save();
     	return redirect('/home'); 
     }
 
