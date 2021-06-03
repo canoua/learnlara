@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\LocationsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,11 +22,11 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::get('/location',[TasksController::class, 'add']);
-Route::post('/location',[TasksController::class, 'create']);
+Route::get('/location',[LocationsController::class, 'add']);
+Route::post('/location',[LocationsController::class, 'create']);
 
-Route::get('/location/{location}', [TasksController::class, 'edit']);
-Route::post('/location/{location}', [TasksController::class, 'update']);
+Route::get('/location/{location}', [LocationsController::class, 'edit']);
+Route::post('/location/{location}', [LocationsController::class, 'update']);
 
 //Auth::routes();
 

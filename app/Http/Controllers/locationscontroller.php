@@ -2,17 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 
-class locationscontroller extends Controller
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\LocationsController;
+
+class LocationsController extends Controller
 {
     public function create(Request $request)
     {
         $this->validate($request, [
             'locationsname' => 'required'
         ]);
-    	$location = new Task();
+    	$location = new Location();
     	$location->locationsname = $request->locationsname;
+        $location->user_id = auth()->user()->id;
     	$location->longitude = auth()->user()->id;
     	$location->save();
     	return redirect('/home'); 
