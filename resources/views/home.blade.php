@@ -104,16 +104,17 @@
             <table class="w-full text-md rounded mb-4">
                 <thead>
                 <tr class="border-b">
-                    <th class="text-left p-3 px-5">Task</th>
-                    <th class="text-left p-3 px-5">Actions</th>
-                    <th></th>
+                    <th class="text-left p-3 px-5">Название</th>
+                    <th class="text-left p-3 px-5">Долгота</th>
+                    <th class="text-left p-3 px-5">Ширина</th>
+                    <!--<th></th>-->
                 </tr>
                 </thead>
                 <tbody>
                 @foreach(auth()->user()->locations as $location)
                     <tr class="border-b hover:bg-orange-100">
                         <td class="p-3 px-5">
-                            {{$location->locationsname}}
+                            {{$location->locations_name}}
                         </td>
                         <td class="p-3 px-5">
                             
@@ -139,9 +140,21 @@
             <form method="POST" action="/home">
 
                 <div class="form-group">
-                    <textarea name="description" class="bg-gray-100 rounded border border-gray-400 leading-normal resize-none w-full h-20 py-2 px-3 font-medium placeholder-gray-700 focus:outline-none focus:bg-white"  placeholder='Enter your task'></textarea>  
-                    @if ($errors->has('locationsname'))
-                        <span class="text-danger">{{ $errors->first('locationsname') }}</span>
+                    <textarea name="description" class="bg-gray-100 rounded border border-gray-400 leading-normal resize-none w-full h-20 py-2 px-3 font-medium placeholder-gray-700 focus:outline-none focus:bg-white"  placeholder='Название локации'></textarea>  
+                    @if ($errors->has('locations_name'))
+                        <span class="text-danger">{{ $errors->first('locations_name') }}</span>
+                    @endif
+                </div>
+                <div class="form-group">
+                    <textarea name="description" class="bg-gray-100 rounded border border-gray-400 leading-normal resize-none w-full h-20 py-2 px-3 font-medium placeholder-gray-700 focus:outline-none focus:bg-white"  placeholder='Долгота'></textarea>  
+                    @if ($errors->has('longitude'))
+                        <span class="text-danger">{{ $errors->first('longitude') }}</span>
+                    @endif
+                </div>
+                <div class="form-group">
+                    <textarea name="description" class="bg-gray-100 rounded border border-gray-400 leading-normal resize-none w-full h-20 py-2 px-3 font-medium placeholder-gray-700 focus:outline-none focus:bg-white"  placeholder='Ширина'></textarea>  
+                    @if ($errors->has('latitude'))
+                        <span class="text-danger">{{ $errors->first('latitude') }}</span>
                     @endif
                 </div>
 
@@ -158,10 +171,10 @@
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-5">
         
-            <form method="POST" action="/home/{{ $location->id }}">
+            <form method="POST" action="/home/">
 
                 <div class="form-group">
-                    <textarea name="locationsname" class="bg-gray-100 rounded border border-gray-400 leading-normal resize-none w-full h-20 py-2 px-3 font-medium placeholder-gray-700 focus:outline-none focus:bg-white">{{$task->description }}</textarea>	
+                    <textarea name="locationsname" class="bg-gray-100 rounded border border-gray-400 leading-normal resize-none w-full h-20 py-2 px-3 font-medium placeholder-gray-700 focus:outline-none focus:bg-white"></textarea>	
                     @if ($errors->has('locationsname'))
                         <span class="text-danger">{{ $errors->first('locationsname') }}</span>
                     @endif

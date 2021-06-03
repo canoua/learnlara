@@ -12,10 +12,10 @@ class LocationsController extends Controller
     public function create(Request $request)
     {
         $this->validate($request, [
-            'locationsname' => 'required'
+            'locations_name' => 'required'
         ]);
     	$location = new Location();
-    	$location->locationsname = $request->locationsname;
+    	$location->locations_name = $request->locations_name;
         $location->user_id = auth()->user()->id;
     	$location->longitude = auth()->user()->id;
     	$location->save();
@@ -43,9 +43,9 @@ class LocationsController extends Controller
     	else
     	{
             $this->validate($request, [
-                'locationsname' => 'required'
+                'locations_name' => 'required'
             ]);
-    		$location->locationsname = $request->locationsname;
+    		$location->locations_name = $request->locations_name;
 	    	$location->save();
 	    	return redirect('/home'); 
     	}    	
