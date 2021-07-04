@@ -10,8 +10,15 @@
 	<script type="text/javascript">
     	ymaps.ready(init);
     	function init(){
-			var location = ymaps.geolocation;
-			var myMap = new ymaps.Map('map', {
+			/*	54.989636, 73.368280 Тарская улица
+			  	54.989537, 73.375532 Сквер имени Дзержинского
+			  	54.990070, 73.375696 улица Гагарина, 34
+			*/
+			let location = ymaps.geolocation;
+			let coords = [[54.990070, 73.375696]];
+			let i;
+			let place;
+			let myMap = new ymaps.Map('map', {
     			center: [55.76, 37.64],
     			zoom: 10
 			}, {
@@ -24,8 +31,8 @@
 			.then(
     			function(result) {
         		// Получение местоположения пользователя.
-        			var userAddress = result.geoObjects.get(0).properties.get('text');
-        			var userCoodinates = result.geoObjects.get(0).geometry.getCoordinates();
+        			let userAddress = result.geoObjects.get(0).properties.get('text');
+        			let userCoodinates = result.geoObjects.get(0).geometry.getCoordinates();
         			// Пропишем полученный адрес в балуне.
         			result.geoObjects.get(0).properties.set({
             			balloonContentBody: 'Адрес: ' + userAddress +
@@ -35,9 +42,57 @@
     			},
     			function(err) {
         			console.log('Ошибка: ' + err)
-    			}
+    			},
 			);
-    	}
+			for(i = 0; i < coords.length; i++) {
+				//place = new ymaps.Placemark(coords[i][0], coords[i][1]);
+				place = new ymaps.Placemark(coords[i]);
+        		myMap.geoObjects.add(place);
+			}
+			console.log(coords);
+		}
+
+	/*	$(document).ready(function() {
+  			$('button.add-locations__btn').click(function(e) {
+    			e.preventDefault();
+    			let btn = $(this);
+				$.ajax({
+					method: "POST",
+					url: "https://jsonplaceholder.typicode.com/posts",
+					dataType: "json",
+					data: {
+						"location_name": $('textarea.location_name').val(),
+						'longitude': $('textarea.longitude').val(),
+						'latitude': $('textarea.latitude').val()
+      				},
+					success: function(data) {
+						console.log(data);
+					},
+					error: function(er) {
+						console.log(er);
+      				}
+    			});
+  			})
+		});*/
+
+		function sendRequest(){
+   			let request = new XMLHttpRequest(); // Создвём объект запроса
+			request.open('GET', 'home'); // Указываем куда отправить запрос
+   			request.send(); // Выполняем отправку 
+			request.onreadystatechange = function () { // Дожидаемся ответа
+				if (request.readyState == 4 && request.status == 200){// Делаем проверку если ответ получен и страница отдала код 200 (открылась)
+       				let response = request.responseText; // Получаем ответ как текст (включая html) и сохраням в переменную
+          			console.log(response); // Выводим данные в консоль
+       			}
+   			}
+		}
+		sendRequest();
+
+		/*let addBtn = document.querySelector('.add-locations__btn');	
+		addBtn.addEventListener('click', function() {
+			e.preventDefault();
+		});*/
+    		
 </script>
 </head>
 <body>
@@ -55,7 +110,7 @@
                 <div class="card-body">
                     @if (session('status'))
                         <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
+                          	{{ session('status') }}
                         </div>
                     @endif
                 </div>
@@ -122,21 +177,21 @@
 				<form method="POST" action="/location">
 	
 					<div class="form-group">
-						<textarea name="location" class="bg-gray-100 rounded border border-gray-400 leading-normal resize-none w-full h-20 py-2 px-3 font-medium placeholder-gray-700 focus:outline-none focus:bg-white"  placeholder='Название локации'></textarea>  
+						<textarea name="location_name" class="location_name bg-gray-100 rounded border border-gray-400 leading-normal resize-none w-full h-20 py-2 px-3 font-medium placeholder-gray-700 focus:outline-none focus:bg-white"  placeholder='Название локации'></textarea>  
 						@if ($errors->has('location_name'))
 							<span class="text-danger">{{ $errors->first('location_name') }}</span>
 						@endif
 					</div>
 					
 					<div class="form-group">
-						<textarea name="longitude" class="bg-gray-100 rounded border border-gray-400 leading-normal resize-none w-full h-20 py-2 px-3 font-medium placeholder-gray-700 focus:outline-none focus:bg-white"  placeholder='Широта'></textarea>  
+						<textarea name="longitude" class="longitude bg-gray-100 rounded border border-gray-400 leading-normal resize-none w-full h-20 py-2 px-3 font-medium placeholder-gray-700 focus:outline-none focus:bg-white"  placeholder='Широта'></textarea>  
 						@if ($errors->has('longitude'))
 							<span class="text-danger">{{ $errors->first('longitude') }}</span>
 						@endif
 					</div>
 					
 					<div class="form-group">
-						<textarea name="latitude" class="bg-gray-100 rounded border border-gray-400 leading-normal resize-none w-full h-20 py-2 px-3 font-medium placeholder-gray-700 focus:outline-none focus:bg-white"  placeholder='Долготаk'></textarea>  
+						<textarea name="latitude" class="latitude bg-gray-100 rounded border border-gray-400 leading-normal resize-none w-full h-20 py-2 px-3 font-medium placeholder-gray-700 focus:outline-none focus:bg-white"  placeholder='Долготаk'></textarea>  
 						@if ($errors->has('latitude'))
 							<span class="text-danger">{{ $errors->first('latitude') }}</span>
 						@endif

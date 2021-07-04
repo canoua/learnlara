@@ -27,10 +27,3 @@ Route::post('/location',[LocationsController::class, 'create']);
 Route::get('/location/{location}', [LocationsController::class, 'edit']);
 Route::post('/location/{location}', [LocationsController::class, 'update']);
 
-//Auth::routes();
-
-//Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
-//Auth::routes();
-
-//Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

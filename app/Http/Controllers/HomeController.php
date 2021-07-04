@@ -6,23 +6,22 @@ use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
+   
     public function __construct()
     {
         $this->middleware('auth');
     }
 
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
-    public function index()
-    {
-        return view('home');
+   
+    public function index() {
+        $locationForJS = "[";
+        foreach (auth()->user()->locations as $location) {
+            $locationForJS = "[" . $location->longitude . "," . $location->latitude . "]";
+        }
+        $locationForJS .= "]";
+        return view('home', compact("locationForJS"));
+
     }
+
+    
 }
